@@ -92,25 +92,29 @@ function Experience() {
         {EXPERIENCE.map((exp) => (
           <div className="flex flex-row">
             <div className="flex w-10 justify-center content-center relative">
-              <div className="w-0.5 bg-accent h-full"></div>
+              <div className="border-r border-solid border-accent_lighter h-full"></div>
               <div
                 className={`${
-                  exp.present ? "bg-accent" : "bg-accent_lighter"
-                } w-4 h-4 rounded-full absolute mt-4`}
+                  exp.present
+                    ? "bg-accent"
+                    : "bg-primary border border-accent_lighter"
+                } w-3 h-3 rounded-full absolute mt-4`}
               ></div>
             </div>
             <div className="flex-1 pb-7">
               <div className="leading-3">
                 <div className="text-xl">
                   {exp.title}
-                  {" ("}
-                  {exp.period}
-                  {exp.present ? (
-                    <span className="text-accent">present</span>
-                  ) : (
-                    ""
-                  )}
-                  {")"}
+                  <span className="font-light opacity-80">
+                    {" ("}
+                    {exp.period}
+                    {exp.present ? (
+                      <span className="text-accent">present</span>
+                    ) : (
+                      ""
+                    )}
+                    {")"}
+                  </span>
                 </div>
                 <div className="opacity-80">{exp.company}</div>
               </div>
@@ -119,7 +123,7 @@ function Experience() {
                   {exp.description}
                 </div>
                 {exp.projects && (
-                  <div className="space-y-3 ">
+                  <div className="space-y-4 ">
                     {exp.projects?.map((project) => (
                       <div className="flex flex-col pl-2">
                         <div className="text-slate-400 leading-4">
@@ -129,8 +133,12 @@ function Experience() {
                           {project.description}
                         </div>
                         {project.technologies && (
-                          <div className="mt-1 px-4 text-xs font-mono opacity-70">
-                            {project.technologies?.join(", ")}
+                          <div className="flex flex-wrap mt-1 text-xs font-mono opacity-70 space-x-1">
+                            {project.technologies?.map((tech) => (
+                              <span className="rounded-md bg-[#293146] px-2 py-0.5 h-max mt-1">
+                                {tech}
+                              </span>
+                            ))}
                           </div>
                         )}
                       </div>
@@ -138,8 +146,12 @@ function Experience() {
                   </div>
                 )}
                 {exp.technologies && (
-                  <div className="mt-1 px-4 text-xs font-mono opacity-70">
-                    {exp.technologies?.join(", ")}
+                  <div className="flex flex-wrap mt-1 text-xs font-mono opacity-70 space-x-1">
+                    {exp.technologies?.map((tech) => (
+                      <span className="rounded-md bg-[#293146] px-2 py-0.5 h-max mt-1">
+                        {tech}
+                      </span>
+                    ))}
                   </div>
                 )}
               </div>
