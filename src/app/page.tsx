@@ -2,7 +2,6 @@ import Experience from "@/components/HomePage/Experience";
 import Header from "@/components/HomePage/Header";
 import Intro from "@/components/HomePage/Intro";
 import Projects from "@/components/HomePage/Projects";
-import Skills from "@/components/HomePage/Skills";
 
 export default function Home() {
   return (
@@ -12,7 +11,6 @@ export default function Home() {
         <Intro />
         <Experience />
         <Projects />
-        <Skills />
       </div>
     </div>
   );
