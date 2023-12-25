@@ -178,8 +178,6 @@ export default function Paws() {
   return (
     <div className="absolute w-full h-full" onMouseMove={handleMouseMove}>
       <div className="relative">
-        <h1>Projects</h1>
-
         {paws.map((paw, index) => (
           <div
             key={index}
