@@ -1,0 +1,25 @@
+.box {
+    position: relative;
+}
+  
+.box .div_inside {
+    z-index: -5;
+    position: absolute;
+    background: #fff;
+    transform: skewX(6deg) skewY(0.4deg);
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(315deg, #fff, #0e162a, #fa923b);
+    transition: transform 500ms ease-in;
+}
+
+.box .content {
+    z-index: 10;
+    padding: 1rem;
+    background: #020617;
+}
+
+.box:hover .content {
+    background: #0c1024;
+    cursor: pointer;
+}

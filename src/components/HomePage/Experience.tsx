@@ -86,7 +86,7 @@ const EXPERIENCE: {
 
 function Experience() {
   return (
-    <div className="justify-center min-h-screen w-full flex flex-col">
+    <div className="justify-center min-h-screen w-full flex flex-col" id="Experience">
       <h1 className="text-3xl">EXPERIENCE</h1>
       <div className="my-5 flex flex-col">
         {EXPERIENCE.map((exp) => (

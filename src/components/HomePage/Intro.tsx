@@ -56,7 +56,10 @@ function TechImg({
 
 function Intro() {
   return (
-    <div className="justify-center min-h-screen w-full flex flex-col ">
+    <div
+      className="justify-center min-h-screen w-full flex flex-col "
+      id="About"
+    >
       <div className="flex flex-col sm:flex-row items-center">
         <div className="py-6 flex-1 flex-col w-full">
           <h1 className="text-3xl">ABOUT</h1>

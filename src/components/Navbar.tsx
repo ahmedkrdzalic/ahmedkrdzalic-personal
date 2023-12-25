@@ -50,7 +50,7 @@ function Navbar() {
           </div>
 
           <ul className="flex flex-col lg:flex-row list-none ml-auto">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <div className="border-solid border hover:border rounded border-accent hover:border-accent_lighter">
                 <a
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:text-accent_lighter"
@@ -59,11 +59,11 @@ function Navbar() {
                   Blog
                 </a>
               </div>
-            </li>
+            </li> */}
             <li className="nav-item">
               <a
                 className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:text-accent_lighter"
-                href="#pablo"
+                href="#About"
               >
                 About
               </a>
@@ -71,7 +71,7 @@ function Navbar() {
             <li className="nav-item">
               <a
                 className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:text-accent_lighter"
-                href="#pablo"
+                href="#Experience"
               >
                 Experience
               </a>
@@ -79,7 +79,7 @@ function Navbar() {
             <li className="nav-item">
               <a
                 className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:text-accent_lighter"
-                href="#pablo"
+                href="#Projects"
               >
                 Projects
               </a>
