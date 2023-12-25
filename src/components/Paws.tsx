@@ -108,15 +108,12 @@ export default function Paws() {
   const [isClicking, setIsClicking] = useState(false);
 
   const handleMouseDown = (event: any) => {
-    event.preventDefault();
     setIsClicking(true);
   };
 
   const handleMouseUp = (event: any) => {
-    event.preventDefault();
     setIsClicking(false);
     setPaws((prevPaws) => [
-      ...prevPaws,
       {
         x: event.nativeEvent.offsetX,
         y: event.nativeEvent.offsetY,
@@ -124,12 +121,15 @@ export default function Paws() {
         timestamp: Date.now(), // Add timestamp
       },
     ]);
+
+    const timer = setTimeout(() => {
+      if (paws.length > 0) setPaws([]);
+    }, 1000);
   };
 
   const handleMouseMove = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    event.preventDefault();
     if (isClicking || event.buttons === 1) {
       return;
     }
@@ -212,6 +212,8 @@ export default function Paws() {
       onMouseMove={handleMouseMove}
       onTouchStart={handleMouseDown}
       onTouchEnd={handleMouseUp}
+      onMouseDown={(event) => event.stopPropagation()}
+      onMouseUp={(event) => event.stopPropagation()}
     >
       <div className="relative">
         {paws.map((paw, index) => (
