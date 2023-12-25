@@ -88,9 +88,14 @@ function Paw({
 
 export default function Paws() {
   const [paws, setPaws] = useState<
-    { x: number; y: number; right: boolean; angle: number; timestamp: number }[]
+    {
+      x: number;
+      y: number;
+      right?: boolean;
+      angle: number;
+      timestamp: number;
+    }[]
   >([]);
-  const [pawOpacities, setPawOpacities] = useState<number[]>([]);
 
   const pawSettings = {
     size: 17,
@@ -100,9 +105,33 @@ export default function Paws() {
     pawDistance: 20, //forward distance between paws
   };
 
+  const [isClicking, setIsClicking] = useState(false);
+
+  const handleMouseDown = (event: any) => {
+    setIsClicking(true);
+  };
+
+  const handleMouseUp = (event: any) => {
+    setIsClicking(false);
+    setPaws((prevPaws) => [
+      ...prevPaws,
+      {
+        x: event.nativeEvent.offsetX,
+        y: event.nativeEvent.offsetY,
+        angle: -90,
+        timestamp: Date.now(), // Add timestamp
+      },
+    ]);
+  };
+
   const handleMouseMove = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
+    if (isClicking || event.buttons === 1) {
+      return;
+    }
+
+    console.log("handleMouseMove");
     setPaws((prevPaws) => {
       const dist = Math.sqrt(
         Math.pow(
@@ -116,6 +145,7 @@ export default function Paws() {
             2
           )
       );
+
       const newPaw = {
         x: event.nativeEvent.offsetX,
         y: event.nativeEvent.offsetY,
@@ -131,21 +161,16 @@ export default function Paws() {
           Math.PI,
         timestamp: Date.now(), // Add timestamp
       };
-      if (dist > pawSettings.pawDistance) {
-        if (prevPaws.length >= pawSettings.trailLength) {
-          // Remove the oldest paw and add the new one
-          setPawOpacities((prevOpacities) => [...prevOpacities.slice(1), 1]);
-          return [...prevPaws.slice(1), newPaw];
-        } else {
-          // Add the new paw
-          setPawOpacities((prevOpacities) => [...prevOpacities, 1]);
-          return [...prevPaws, newPaw];
-        }
-      } else if (paws.length === 0) {
-        setPawOpacities([1]);
-        return [newPaw];
+
+      if (prevPaws.length === 0) return [newPaw];
+      if (dist < pawSettings.pawDistance) return [...prevPaws];
+
+      if (prevPaws.length >= pawSettings.trailLength) {
+        // Remove the oldest paw and add the new one
+        return [...prevPaws.slice(1), newPaw];
       } else {
-        return [...prevPaws];
+        // Add the new paw
+        return [...prevPaws, newPaw];
       }
     });
   };
@@ -153,30 +178,38 @@ export default function Paws() {
   useEffect(() => {
     const interval = setInterval(() => {
       setPaws((prevPaws) => {
-        if (prevPaws.length > 0 && Date.now() - prevPaws[0].timestamp > 10) {
+        if (prevPaws.length > 0 && Date.now() - prevPaws[0].timestamp > 200) {
           // Remove the oldest paw
-          return prevPaws.slice(1);
+          return [...prevPaws.slice(1)];
         } else {
           // No paws to remove
-          return prevPaws;
+          return [...prevPaws];
         }
       });
-
-      // Start the fade-out animation for the oldest paw
-      setPawOpacities((prevOpacities) => {
-        if (prevOpacities.length > 0) {
-          return [0, ...prevOpacities.slice(1)];
-        } else {
-          return prevOpacities;
-        }
-      });
-    }, 100);
+    }, 200);
 
     return () => clearInterval(interval); // Clean up on unmount
   }, []);
 
+  // Define the function
+  const getJustifyContent = (right: boolean | undefined) => {
+    let value;
+    if (right === undefined) {
+      value = "center";
+    } else {
+      value = right ? "flex-end" : "flex-start";
+    }
+    console.log(value);
+    return value;
+  };
+
   return (
-    <div className="absolute w-full h-full" onMouseMove={handleMouseMove}>
+    <div
+      className="absolute w-full h-full"
+      onMouseMove={handleMouseMove}
+      onTouchStart={handleMouseDown}
+      onTouchEnd={handleMouseUp}
+    >
       <div className="relative">
         {paws.map((paw, index) => (
           <div
@@ -190,16 +223,24 @@ export default function Paws() {
               height: `${pawSettings.size}px`,
               rotate: `${paw.angle + 90}deg`,
               zIndex: -1,
-              opacity: pawOpacities[index],
+              display: "flex",
+              justifyContent: getJustifyContent(paw.right),
             }}
           >
             <Paw
               width={pawSettings.size}
               height={pawSettings.size}
               fill={pawSettings.color}
-              style={{
-                float: paw.right ? "right" : "left",
-              }}
+              style={
+                {
+                  // float:
+                  //   paw.right === undefined
+                  //     ? undefined
+                  //     : paw.right === false
+                  //     ? "left"
+                  //     : "right",
+                }
+              }
             />
           </div>
         ))}
