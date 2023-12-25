@@ -108,10 +108,12 @@ export default function Paws() {
   const [isClicking, setIsClicking] = useState(false);
 
   const handleMouseDown = (event: any) => {
+    event.preventDefault();
     setIsClicking(true);
   };
 
   const handleMouseUp = (event: any) => {
+    event.preventDefault();
     setIsClicking(false);
     setPaws((prevPaws) => [
       ...prevPaws,
@@ -127,6 +129,7 @@ export default function Paws() {
   const handleMouseMove = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
+    event.preventDefault();
     if (isClicking || event.buttons === 1) {
       return;
     }
