@@ -134,7 +134,7 @@ export default function Paws() {
       return;
     }
 
-    console.log("handleMouseMove");
+    // console.log("handleMouseMove");
     setPaws((prevPaws) => {
       const dist = Math.sqrt(
         Math.pow(
@@ -202,7 +202,7 @@ export default function Paws() {
     } else {
       value = right ? "flex-end" : "flex-start";
     }
-    console.log(value);
+    // console.log(value);
     return value;
   };
 

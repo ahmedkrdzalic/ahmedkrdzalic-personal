@@ -78,8 +78,8 @@ function Intro() {
               </p>
             </div>
             <div className="w-full h-10 flex space-x-1">
-              {techImgs.map((img) => (
-                <TechImg {...img} />
+              {techImgs.map((img, i) => (
+                <TechImg {...img} key={i} />
               ))}
             </div>
           </div>
